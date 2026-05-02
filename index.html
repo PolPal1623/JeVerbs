@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
+  <meta name="theme-color" content="#101318">
   <title>French Learning Suite · Je verbs</title>
   <style>
     :root {
-      color-scheme: light dark;
+      color-scheme: light;
       --bg: #f6f7fb;
-      --panel: rgba(255, 255, 255, 0.88);
+      --panel: rgba(255, 255, 255, 0.9);
       --surface: #ffffff;
       --soft: #eef2f7;
       --text: #111827;
       --muted: #667085;
-      --line: rgba(17, 24, 39, 0.10);
+      --line: rgba(17, 24, 39, 0.1);
       --blue: #2563eb;
       --blue-strong: #1d4ed8;
-      --orange: #f97316;
       --green: #059669;
+      --orange: #f97316;
       --red: #dc2626;
       --shadow: 0 22px 44px -30px rgba(15, 23, 42, 0.48);
       --radius: 8px;
-      --font-ui: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --font-ui: "Avenir Next", "Segoe UI", "Noto Sans", system-ui, -apple-system, sans-serif;
     }
 
     [data-theme="dark"] {
+      color-scheme: dark;
       --bg: #101318;
-      --panel: rgba(22, 27, 34, 0.88);
+      --panel: rgba(22, 27, 34, 0.9);
       --surface: #161b22;
       --soft: #202733;
       --text: #f7f8fb;
@@ -45,13 +45,20 @@
       box-sizing: border-box;
     }
 
+    html {
+      -webkit-font-smoothing: antialiased;
+      font-kerning: normal;
+      text-rendering: optimizeLegibility;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       font-family: var(--font-ui);
       color: var(--text);
       background:
-        linear-gradient(180deg, rgba(37, 99, 235, 0.10), transparent 260px),
+        radial-gradient(circle at 12% 0, rgba(96, 165, 250, 0.24), transparent 30rem),
+        linear-gradient(180deg, rgba(249, 115, 22, 0.09), transparent 24rem),
         var(--bg);
     }
 
@@ -73,28 +80,35 @@
       gap: 14px;
     }
 
-    .suite-bar,
-    .topbar,
+    .suite,
+    .hero,
     .panel,
-    .verb-card,
-    .stat-tile {
+    .card,
+    .stat {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
     }
 
-    .suite-bar {
+    .suite,
+    .tabs,
+    .actions,
+    .chips {
       display: flex;
-      justify-content: space-between;
+      gap: 8px;
       align-items: center;
-      gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .suite {
+      justify-content: space-between;
       padding: 12px;
     }
 
-    .suite-badge {
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -103,22 +117,23 @@
       font-weight: 800;
     }
 
-    .suite-badge::before {
+    .badge::before {
       content: "";
       width: 12px;
       height: 12px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--blue), var(--orange));
-      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+      box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.12);
+      flex: 0 0 auto;
     }
 
-    .topbar {
+    .hero {
+      padding: 16px;
       display: grid;
       gap: 12px;
-      padding: 16px;
     }
 
-    .brand-row {
+    .hero-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -134,30 +149,26 @@
     }
 
     h1 {
-      font-size: 2rem;
-      line-height: 1.05;
-      letter-spacing: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    h2,
+    h3 {
+      letter-spacing: -0.01em;
     }
 
     .subtitle {
-      margin-top: 6px;
-      color: var(--muted);
-      line-height: 1.45;
       max-width: 72ch;
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
-    .toolbar,
-    .tabs,
-    .actions,
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .tab,
     .btn,
+    .tab,
     .chip {
       display: inline-flex;
       align-items: center;
@@ -174,71 +185,55 @@
       transition: transform 140ms ease, background 140ms ease, color 140ms ease, border-color 140ms ease;
     }
 
+    .btn:hover,
+    .tab:hover,
+    .chip:hover,
+    .card:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary,
     .tab[aria-selected="true"],
-    .btn.primary,
     .chip[aria-pressed="true"] {
-      background: var(--blue);
-      border-color: var(--blue);
+      background: var(--blue-strong);
+      border-color: var(--blue-strong);
       color: #fff;
     }
 
-    .btn.ghost {
+    .ghost {
       background: transparent;
     }
 
-    .btn.success {
+    .good {
       background: color-mix(in srgb, var(--green) 14%, var(--surface));
       color: var(--green);
     }
 
-    .btn.danger {
+    .bad {
       background: color-mix(in srgb, var(--red) 12%, var(--surface));
       color: var(--red);
     }
 
-    .tab:hover,
-    .btn:hover,
-    .chip:hover,
-    .verb-card:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.52;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .layout {
+    .stats {
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
-    }
-
-    .stats-grid,
-    .verb-grid {
-      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .stats-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .stat-tile {
+    .stat {
       padding: 14px;
     }
 
-    .stat-label {
+    .label {
       color: var(--muted);
       font-size: 0.86rem;
     }
 
-    .stat-value {
+    .value {
       display: block;
       margin-top: 5px;
       font-size: 1.45rem;
-      font-weight: 850;
+      font-weight: 800;
     }
 
     .panel {
@@ -247,19 +242,21 @@
       gap: 14px;
     }
 
-    .panel-header {
+    .panel-head {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 10px;
+      align-items: center;
       flex-wrap: wrap;
     }
 
-    .verb-grid {
+    .grid {
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
     }
 
-    .verb-card {
+    .card {
       text-align: left;
       display: grid;
       gap: 10px;
@@ -268,73 +265,68 @@
       cursor: pointer;
     }
 
-    .verb-title {
+    .card-title {
       display: flex;
       justify-content: space-between;
       gap: 10px;
       align-items: baseline;
     }
 
-    .verb-title strong {
-      font-size: 1.12rem;
-    }
-
     .muted {
       color: var(--muted);
     }
 
-    .progress-line {
+    .bar {
       height: 8px;
       border-radius: 999px;
       overflow: hidden;
       background: var(--soft);
     }
 
-    .progress-fill {
+    .fill {
       width: var(--value, 0%);
       height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--green));
       border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--green));
       transition: width 180ms ease;
     }
 
-    .detail-grid {
+    .detail {
       display: grid;
       gap: 14px;
     }
 
-    .forms-table {
+    table {
       width: 100%;
       border-collapse: collapse;
-      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      overflow: hidden;
     }
 
-    .forms-table th,
-    .forms-table td {
+    th,
+    td {
       padding: 11px;
       text-align: left;
       border-bottom: 1px solid var(--line);
       vertical-align: top;
     }
 
-    .forms-table tr:last-child td {
+    tr:last-child td {
       border-bottom: 0;
     }
 
-    .forms-table th {
+    th {
       color: var(--muted);
       font-size: 0.86rem;
       background: var(--soft);
     }
 
-    .form-text {
+    .form {
       font-weight: 800;
     }
 
-    .example-list,
-    .error-list {
+    .list {
       display: grid;
       gap: 8px;
       padding: 0;
@@ -342,25 +334,23 @@
       list-style: none;
     }
 
-    .example-list li,
-    .error-list li,
-    .feedback {
+    .list li,
+    .feedback,
+    .train-card {
       padding: 11px;
       border-radius: var(--radius);
       background: var(--soft);
       border: 1px solid var(--line);
     }
 
-    .training-card {
+    .train-card {
       min-height: 260px;
       display: grid;
       align-content: center;
       justify-items: center;
       gap: 16px;
       text-align: center;
-      border-radius: var(--radius);
       background: var(--surface);
-      border: 1px solid var(--line);
       padding: 24px;
     }
 
@@ -370,12 +360,10 @@
     }
 
     .prompt-main {
-      font-size: 1.65rem;
-      font-weight: 850;
-    }
-
-    .prompt-meta {
-      color: var(--muted);
+      font-size: clamp(1.55rem, 5vw, 2.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      font-weight: 800;
     }
 
     .input-row {
@@ -384,7 +372,7 @@
       gap: 8px;
     }
 
-    .text-input,
+    .input,
     .select {
       width: 100%;
       min-height: 46px;
@@ -396,20 +384,20 @@
       outline: none;
     }
 
-    .text-input:focus,
+    .input:focus,
     .select:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 18%, transparent);
     }
 
-    .choice-grid,
-    .match-grid {
+    .choice,
+    .match {
       display: grid;
       gap: 10px;
       width: min(720px, 100%);
     }
 
-    .choice-grid {
+    .choice {
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
 
@@ -424,12 +412,12 @@
       background: var(--surface);
     }
 
-    .result-ok {
+    .ok {
       color: var(--green);
       font-weight: 800;
     }
 
-    .result-bad {
+    .no {
       color: var(--red);
       font-weight: 800;
     }
@@ -439,15 +427,15 @@
     }
 
     @media (min-width: 780px) {
-      .topbar {
+      .hero {
         padding: 18px;
       }
 
-      .stats-grid {
+      .stats {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
-      .detail-grid {
+      .detail {
         grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
       }
 
@@ -455,41 +443,29 @@
         grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr);
       }
     }
-=======
-<html lang="ru" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101318">
-  <title>French Learning Suite · Je verbs</title>
-  <style>
-    :root{color-scheme:dark;--bg:#101318;--panel:rgba(22,27,34,.9);--surface:#161b22;--soft:#202733;--text:#f7f8fb;--muted:#aab3c2;--line:rgba(255,255,255,.11);--blue:#60a5fa;--blue2:#2563eb;--green:#34d399;--orange:#fb923c;--red:#f87171;--shadow:0 24px 48px -30px rgba(0,0,0,.72);--radius:8px;--font:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:var(--font);color:var(--text);background:radial-gradient(circle at 12% 0,rgba(96,165,250,.24),transparent 30rem),linear-gradient(180deg,rgba(251,146,60,.08),transparent 24rem),var(--bg)}button,input,select{font:inherit}button{border:0}.app{width:min(1180px,100%);margin:auto;padding:18px 14px 44px;display:grid;gap:14px}.suite,.hero,.panel,.card,.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(16px)}.suite,.row,.tabs,.actions,.chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.suite{justify-content:space-between;padding:12px}.badge{color:var(--text);text-decoration:none;font-weight:850}.badge:before{content:"";display:inline-block;width:12px;height:12px;margin-right:10px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--orange));box-shadow:0 0 0 6px rgba(96,165,250,.12);vertical-align:-1px}.hero{padding:16px;display:grid;gap:12px}.hero-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}h1,h2,h3,p{margin:0}h1{font-size:clamp(2rem,7vw,4.6rem);line-height:.92;letter-spacing:-.06em}.sub{max-width:72ch;color:var(--muted);line-height:1.45}.btn,.tab,.chip{min-height:40px;border-radius:var(--radius);padding:10px 13px;cursor:pointer;font-weight:800;color:var(--text);background:var(--soft);border:1px solid var(--line);text-decoration:none;transition:transform .14s ease,background .14s ease,color .14s ease}.btn:hover,.tab:hover,.chip:hover,.card:hover{transform:translateY(-1px)}.primary,.tab[aria-selected=true],.chip[aria-pressed=true]{background:var(--blue2);border-color:var(--blue2);color:#fff}.ghost{background:transparent}.good{background:rgba(52,211,153,.13);color:var(--green)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{padding:14px}.label{color:var(--muted);font-size:.86rem}.value{display:block;margin-top:5px;font-size:1.45rem;font-weight:900}.panel{padding:16px;display:grid;gap:14px}.panel-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.card{text-align:left;display:grid;gap:10px;padding:14px;color:var(--text);cursor:pointer}.card-title{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.muted{color:var(--muted)}.bar{height:8px;border-radius:999px;overflow:hidden;background:var(--soft)}.fill{width:var(--v,0%);height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .18s ease}.detail{display:grid;gap:14px}table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}th,td{padding:11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}th{color:var(--muted);font-size:.86rem;background:var(--soft)}.form{font-weight:900}.list{display:grid;gap:8px;padding:0;margin:0;list-style:none}.list li,.feedback,.train-card{padding:11px;border-radius:var(--radius);background:var(--soft);border:1px solid var(--line)}.train-card{min-height:260px;display:grid;align-content:center;justify-items:center;gap:16px;text-align:center;background:var(--surface);padding:24px}.prompt{display:grid;gap:6px}.prompt-main{font-size:clamp(1.6rem,6vw,3rem);font-weight:950;letter-spacing:-.04em}.input-row{width:min(520px,100%);display:grid;gap:8px}.input,.select{width:100%;min-height:46px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);color:var(--text);padding:11px 12px;outline:none}.input:focus,.select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(96,165,250,.18)}.choice,.match{display:grid;gap:10px;width:min(720px,100%)}.choice{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.match-row{display:grid;grid-template-columns:1fr;gap:8px;padding:10px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}.ok{color:var(--green);font-weight:900}.no{color:var(--red);font-weight:900}[hidden]{display:none!important}@media(min-width:780px){.hero{padding:18px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.detail{grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr)}.match-row{grid-template-columns:1fr minmax(220px,.8fr)}}
->>>>>>> 8a984f3abe7880330b811ffbcd4cb5ec3edf31b9
   </style>
 </head>
 <body>
   <main class="app">
-<<<<<<< HEAD
-    <div class="suite-bar">
-      <a class="suite-badge" href="https://polpal1623.github.io/FrenchLibrary/">French Learning Suite</a>
+    <div class="suite">
+      <a class="badge" href="https://polpal1623.github.io/FrenchLibrary/">French Learning Suite</a>
       <div class="actions">
         <a class="btn ghost" href="https://polpal1623.github.io/FrenchLibrary/">Все приложения</a>
         <a class="btn ghost" href="https://github.com/PolPal1623/JeVerbs">GitHub</a>
       </div>
     </div>
 
-    <header class="topbar">
-      <div class="brand-row">
+    <header class="hero">
+      <div class="hero-top">
         <div>
           <h1>Je verbs</h1>
-          <p class="subtitle">10 базовых глаголов, 5 времён и только формы с <strong>je</strong> для быстрого автоматизма.</p>
+          <p class="subtitle">10 базовых французских глаголов уровня A1-A2, 5 времён и только формы с <strong>je</strong>, чтобы быстрее довести их до автоматизма.</p>
         </div>
-        <div class="toolbar">
-          <button class="btn" id="themeBtn" type="button" aria-pressed="false">Тема</button>
+        <div class="actions">
+          <button class="btn" id="themeBtn" type="button" aria-pressed="true">Тема</button>
           <button class="btn ghost" id="resetBtn" type="button">Сброс</button>
         </div>
       </div>
-
       <nav class="tabs" aria-label="Разделы">
         <button class="tab" type="button" data-view="dashboard" aria-selected="true">Глаголы</button>
         <button class="tab" type="button" data-view="training" aria-selected="false">Тренировка</button>
@@ -498,395 +474,245 @@
       </nav>
     </header>
 
-    <section class="stats-grid" aria-label="Сводка прогресса">
-      <article class="stat-tile">
-        <span class="stat-label">Выучено</span>
-        <strong class="stat-value" id="learnedStat">0%</strong>
-      </article>
-      <article class="stat-tile">
-        <span class="stat-label">Форм</span>
-        <strong class="stat-value" id="formsStat">0/50</strong>
-      </article>
-      <article class="stat-tile">
-        <span class="stat-label">Ошибок</span>
-        <strong class="stat-value" id="errorsStat">0</strong>
-      </article>
-      <article class="stat-tile">
-        <span class="stat-label">Streak</span>
-        <strong class="stat-value" id="streakStat">0 дней</strong>
-      </article>
+    <section class="stats" aria-label="Сводка прогресса">
+      <article class="stat"><span class="label">Выучено</span><strong class="value" id="learnedStat">0%</strong></article>
+      <article class="stat"><span class="label">Форм</span><strong class="value" id="formsStat">0/50</strong></article>
+      <article class="stat"><span class="label">Ошибок</span><strong class="value" id="errorsStat">0</strong></article>
+      <article class="stat"><span class="label">Streak</span><strong class="value" id="streakStat">0 дней</strong></article>
     </section>
 
-    <section class="layout">
-      <section class="panel" id="dashboardView"></section>
-      <section class="panel" id="detailView" hidden></section>
-      <section class="panel" id="trainingView" hidden></section>
-      <section class="panel" id="testView" hidden></section>
-      <section class="panel" id="progressView" hidden></section>
-    </section>
+    <section class="panel" id="dashboardView"></section>
+    <section class="panel" id="detailView" hidden></section>
+    <section class="panel" id="trainingView" hidden></section>
+    <section class="panel" id="testView" hidden></section>
+    <section class="panel" id="progressView" hidden></section>
   </main>
 
   <script>
     const TENSES = [
-      { id: "present", label: "Présent" },
-      { id: "futurProche", label: "Futur proche" },
-      { id: "passeCompose", label: "Passé composé" },
-      { id: "imparfait", label: "Imparfait" },
-      { id: "futurSimple", label: "Futur simple" }
+      ["present", "Présent"],
+      ["futurProche", "Futur proche"],
+      ["passeCompose", "Passé composé"],
+      ["imparfait", "Imparfait"],
+      ["futurSimple", "Futur simple"]
     ];
 
     const VERBS = [
-      {
-        id: "etre",
-        infinitive: "être",
-        ru: "быть",
-        forms: {
-          present: { form: "je suis", ru: "я есть / я являюсь", example: "Je suis prêt.", exampleRu: "Я готов." },
-          futurProche: { form: "je vais être", ru: "я собираюсь быть", example: "Je vais être à la maison.", exampleRu: "Я буду дома." },
-          passeCompose: { form: "j'ai été", ru: "я был(а)", example: "J'ai été malade.", exampleRu: "Я был болен." },
-          imparfait: { form: "j'étais", ru: "я был(а)", example: "J'étais fatigué.", exampleRu: "Я был уставшим." },
-          futurSimple: { form: "je serai", ru: "я буду", example: "Je serai là demain.", exampleRu: "Я буду там завтра." }
-        }
-      },
-      {
-        id: "avoir",
-        infinitive: "avoir",
-        ru: "иметь",
-        forms: {
-          present: { form: "j'ai", ru: "у меня есть", example: "J'ai un livre.", exampleRu: "У меня есть книга." },
-          futurProche: { form: "je vais avoir", ru: "у меня скоро будет", example: "Je vais avoir le temps.", exampleRu: "У меня будет время." },
-          passeCompose: { form: "j'ai eu", ru: "у меня было", example: "J'ai eu une idée.", exampleRu: "У меня появилась идея." },
-          imparfait: { form: "j'avais", ru: "у меня было", example: "J'avais froid.", exampleRu: "Мне было холодно." },
-          futurSimple: { form: "j'aurai", ru: "у меня будет", example: "J'aurai besoin d'aide.", exampleRu: "Мне понадобится помощь." }
-        }
-      },
-      {
-        id: "aller",
-        infinitive: "aller",
-        ru: "идти / ехать",
-        forms: {
-          present: { form: "je vais", ru: "я иду / еду", example: "Je vais au travail.", exampleRu: "Я иду на работу." },
-          futurProche: { form: "je vais aller", ru: "я собираюсь пойти", example: "Je vais aller au marché.", exampleRu: "Я собираюсь пойти на рынок." },
-          passeCompose: { form: "je suis allé(e)", ru: "я сходил(а) / ездил(а)", example: "Je suis allé au parc.", exampleRu: "Я ходил в парк." },
-          imparfait: { form: "j'allais", ru: "я ходил(а) / шёл", example: "J'allais souvent ici.", exampleRu: "Я часто ходил сюда." },
-          futurSimple: { form: "j'irai", ru: "я пойду / поеду", example: "J'irai demain.", exampleRu: "Я пойду завтра." }
-        }
-      },
-      {
-        id: "faire",
-        infinitive: "faire",
-        ru: "делать",
-        forms: {
-          present: { form: "je fais", ru: "я делаю", example: "Je fais mes devoirs.", exampleRu: "Я делаю домашнее задание." },
-          futurProche: { form: "je vais faire", ru: "я собираюсь сделать", example: "Je vais faire le dîner.", exampleRu: "Я собираюсь приготовить ужин." },
-          passeCompose: { form: "j'ai fait", ru: "я сделал(а)", example: "J'ai fait une pause.", exampleRu: "Я сделал перерыв." },
-          imparfait: { form: "je faisais", ru: "я делал(а)", example: "Je faisais du sport.", exampleRu: "Я занимался спортом." },
-          futurSimple: { form: "je ferai", ru: "я сделаю", example: "Je ferai attention.", exampleRu: "Я буду внимателен." }
-        }
-      },
-      {
-        id: "dire",
-        infinitive: "dire",
-        ru: "сказать / говорить",
-        forms: {
-          present: { form: "je dis", ru: "я говорю", example: "Je dis la vérité.", exampleRu: "Я говорю правду." },
-          futurProche: { form: "je vais dire", ru: "я собираюсь сказать", example: "Je vais dire bonjour.", exampleRu: "Я собираюсь поздороваться." },
-          passeCompose: { form: "j'ai dit", ru: "я сказал(а)", example: "J'ai dit merci.", exampleRu: "Я сказал спасибо." },
-          imparfait: { form: "je disais", ru: "я говорил(а)", example: "Je disais la même chose.", exampleRu: "Я говорил то же самое." },
-          futurSimple: { form: "je dirai", ru: "я скажу", example: "Je dirai oui.", exampleRu: "Я скажу да." }
-        }
-      },
-      {
-        id: "devoir",
-        infinitive: "devoir",
-        ru: "долженствовать",
-        forms: {
-          present: { form: "je dois", ru: "я должен / должна", example: "Je dois partir.", exampleRu: "Я должен уйти." },
-          futurProche: { form: "je vais devoir", ru: "мне придётся", example: "Je vais devoir attendre.", exampleRu: "Мне придётся ждать." },
-          passeCompose: { form: "j'ai dû", ru: "мне пришлось", example: "J'ai dû partir tôt.", exampleRu: "Мне пришлось уйти рано." },
-          imparfait: { form: "je devais", ru: "я должен был", example: "Je devais travailler.", exampleRu: "Я должен был работать." },
-          futurSimple: { form: "je devrai", ru: "я должен буду", example: "Je devrai choisir.", exampleRu: "Я должен буду выбрать." }
-        }
-      },
-      {
-        id: "pouvoir",
-        infinitive: "pouvoir",
-        ru: "мочь",
-        forms: {
-          present: { form: "je peux", ru: "я могу", example: "Je peux aider.", exampleRu: "Я могу помочь." },
-          futurProche: { form: "je vais pouvoir", ru: "я смогу скоро", example: "Je vais pouvoir venir.", exampleRu: "Я смогу прийти." },
-          passeCompose: { form: "j'ai pu", ru: "я смог(ла)", example: "J'ai pu finir.", exampleRu: "Я смог закончить." },
-          imparfait: { form: "je pouvais", ru: "я мог(ла)", example: "Je pouvais comprendre.", exampleRu: "Я мог понять." },
-          futurSimple: { form: "je pourrai", ru: "я смогу", example: "Je pourrai répondre.", exampleRu: "Я смогу ответить." }
-        }
-      },
-      {
-        id: "vouloir",
-        infinitive: "vouloir",
-        ru: "хотеть",
-        forms: {
-          present: { form: "je veux", ru: "я хочу", example: "Je veux apprendre.", exampleRu: "Я хочу учиться." },
-          futurProche: { form: "je vais vouloir", ru: "я захочу", example: "Je vais vouloir essayer.", exampleRu: "Я захочу попробовать." },
-          passeCompose: { form: "j'ai voulu", ru: "я захотел(а)", example: "J'ai voulu comprendre.", exampleRu: "Я захотел понять." },
-          imparfait: { form: "je voulais", ru: "я хотел(а)", example: "Je voulais rester.", exampleRu: "Я хотел остаться." },
-          futurSimple: { form: "je voudrai", ru: "я захочу", example: "Je voudrai parler.", exampleRu: "Я захочу поговорить." }
-        }
-      },
-      {
-        id: "savoir",
-        infinitive: "savoir",
-        ru: "знать / уметь",
-        forms: {
-          present: { form: "je sais", ru: "я знаю / умею", example: "Je sais nager.", exampleRu: "Я умею плавать." },
-          futurProche: { form: "je vais savoir", ru: "я узнаю", example: "Je vais savoir la réponse.", exampleRu: "Я узнаю ответ." },
-          passeCompose: { form: "j'ai su", ru: "я узнал(а)", example: "J'ai su la nouvelle.", exampleRu: "Я узнал новость." },
-          imparfait: { form: "je savais", ru: "я знал(а)", example: "Je savais déjà.", exampleRu: "Я уже знал." },
-          futurSimple: { form: "je saurai", ru: "я буду знать", example: "Je saurai quoi faire.", exampleRu: "Я буду знать, что делать." }
-        }
-      },
-      {
-        id: "prendre",
-        infinitive: "prendre",
-        ru: "брать",
-        forms: {
-          present: { form: "je prends", ru: "я беру", example: "Je prends le bus.", exampleRu: "Я еду на автобусе." },
-          futurProche: { form: "je vais prendre", ru: "я собираюсь взять", example: "Je vais prendre un café.", exampleRu: "Я собираюсь выпить кофе." },
-          passeCompose: { form: "j'ai pris", ru: "я взял(а)", example: "J'ai pris une photo.", exampleRu: "Я сделал фотографию." },
-          imparfait: { form: "je prenais", ru: "я брал(а)", example: "Je prenais le train.", exampleRu: "Я ездил на поезде." },
-          futurSimple: { form: "je prendrai", ru: "я возьму", example: "Je prendrai rendez-vous.", exampleRu: "Я запишусь на встречу." }
-        }
-      }
+      { id: "etre", inf: "être", ru: "быть", f: { present: ["je suis", "я есть / являюсь", "Je suis prêt.", "Я готов."], futurProche: ["je vais être", "я собираюсь быть", "Je vais être à la maison.", "Я буду дома."], passeCompose: ["j'ai été", "я был(а)", "J'ai été malade.", "Я был болен."], imparfait: ["j'étais", "я был(а)", "J'étais fatigué.", "Я был уставшим."], futurSimple: ["je serai", "я буду", "Je serai là demain.", "Я буду там завтра."] } },
+      { id: "avoir", inf: "avoir", ru: "иметь", f: { present: ["j'ai", "у меня есть", "J'ai un livre.", "У меня есть книга."], futurProche: ["je vais avoir", "у меня скоро будет", "Je vais avoir le temps.", "У меня будет время."], passeCompose: ["j'ai eu", "у меня было", "J'ai eu une idée.", "У меня появилась идея."], imparfait: ["j'avais", "у меня было", "J'avais froid.", "Мне было холодно."], futurSimple: ["j'aurai", "у меня будет", "J'aurai besoin d'aide.", "Мне понадобится помощь."] } },
+      { id: "aller", inf: "aller", ru: "идти / ехать", f: { present: ["je vais", "я иду / еду", "Je vais au travail.", "Я иду на работу."], futurProche: ["je vais aller", "я собираюсь пойти", "Je vais aller au marché.", "Я собираюсь пойти на рынок."], passeCompose: ["je suis allé(e)", "я сходил(а) / ездил(а)", "Je suis allé au parc.", "Я ходил в парк."], imparfait: ["j'allais", "я ходил(а) / шёл", "J'allais souvent ici.", "Я часто ходил сюда."], futurSimple: ["j'irai", "я пойду / поеду", "J'irai demain.", "Я пойду завтра."] } },
+      { id: "faire", inf: "faire", ru: "делать", f: { present: ["je fais", "я делаю", "Je fais mes devoirs.", "Я делаю домашнее задание."], futurProche: ["je vais faire", "я собираюсь сделать", "Je vais faire le dîner.", "Я собираюсь приготовить ужин."], passeCompose: ["j'ai fait", "я сделал(а)", "J'ai fait une pause.", "Я сделал перерыв."], imparfait: ["je faisais", "я делал(а)", "Je faisais du sport.", "Я занимался спортом."], futurSimple: ["je ferai", "я сделаю", "Je ferai attention.", "Я буду внимателен."] } },
+      { id: "dire", inf: "dire", ru: "сказать / говорить", f: { present: ["je dis", "я говорю", "Je dis la vérité.", "Я говорю правду."], futurProche: ["je vais dire", "я собираюсь сказать", "Je vais dire bonjour.", "Я собираюсь поздороваться."], passeCompose: ["j'ai dit", "я сказал(а)", "J'ai dit merci.", "Я сказал спасибо."], imparfait: ["je disais", "я говорил(а)", "Je disais la même chose.", "Я говорил то же самое."], futurSimple: ["je dirai", "я скажу", "Je dirai oui.", "Я скажу да."] } },
+      { id: "devoir", inf: "devoir", ru: "быть должным", f: { present: ["je dois", "я должен / должна", "Je dois partir.", "Я должен уйти."], futurProche: ["je vais devoir", "мне придётся", "Je vais devoir attendre.", "Мне придётся ждать."], passeCompose: ["j'ai dû", "мне пришлось", "J'ai dû partir tôt.", "Мне пришлось уйти рано."], imparfait: ["je devais", "я должен был", "Je devais travailler.", "Я должен был работать."], futurSimple: ["je devrai", "я должен буду", "Je devrai choisir.", "Я должен буду выбрать."] } },
+      { id: "pouvoir", inf: "pouvoir", ru: "мочь", f: { present: ["je peux", "я могу", "Je peux aider.", "Я могу помочь."], futurProche: ["je vais pouvoir", "я скоро смогу", "Je vais pouvoir venir.", "Я смогу прийти."], passeCompose: ["j'ai pu", "я смог(ла)", "J'ai pu finir.", "Я смог закончить."], imparfait: ["je pouvais", "я мог(ла)", "Je pouvais comprendre.", "Я мог понять."], futurSimple: ["je pourrai", "я смогу", "Je pourrai répondre.", "Я смогу ответить."] } },
+      { id: "vouloir", inf: "vouloir", ru: "хотеть", f: { present: ["je veux", "я хочу", "Je veux apprendre.", "Я хочу учиться."], futurProche: ["je vais vouloir", "я захочу", "Je vais vouloir essayer.", "Я захочу попробовать."], passeCompose: ["j'ai voulu", "я захотел(а)", "J'ai voulu comprendre.", "Я захотел понять."], imparfait: ["je voulais", "я хотел(а)", "Je voulais rester.", "Я хотел остаться."], futurSimple: ["je voudrai", "я захочу", "Je voudrai parler.", "Я захочу поговорить."] } },
+      { id: "savoir", inf: "savoir", ru: "знать / уметь", f: { present: ["je sais", "я знаю / умею", "Je sais nager.", "Я умею плавать."], futurProche: ["je vais savoir", "я узнаю", "Je vais savoir la réponse.", "Я узнаю ответ."], passeCompose: ["j'ai su", "я узнал(а)", "J'ai su la nouvelle.", "Я узнал новость."], imparfait: ["je savais", "я знал(а)", "Je savais déjà.", "Я уже знал."], futurSimple: ["je saurai", "я буду знать", "Je saurai quoi faire.", "Я буду знать, что делать."] } },
+      { id: "prendre", inf: "prendre", ru: "брать", f: { present: ["je prends", "я беру", "Je prends un café.", "Я беру кофе."], futurProche: ["je vais prendre", "я собираюсь взять", "Je vais prendre le bus.", "Я собираюсь сесть на автобус."], passeCompose: ["j'ai pris", "я взял(а)", "J'ai pris une photo.", "Я сделал фото."], imparfait: ["je prenais", "я брал(а)", "Je prenais le train.", "Я ездил на поезде."], futurSimple: ["je prendrai", "я возьму", "Je prendrai rendez-vous.", "Я запишусь на встречу."] } }
     ];
 
-    const STORAGE_KEY = "je-verbs-progress-v1";
-    const THEME_KEY = "je-verbs-theme";
-    const DAY_MS = 24 * 60 * 60 * 1000;
-    const TOTAL_FORMS = VERBS.length * TENSES.length;
-
+    const STORE = "jeVerbsProgress.v2";
+    const THEME = "jeVerbsTheme.v2";
+    const TOTAL = VERBS.length * TENSES.length;
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
     const views = {
-      dashboard: document.getElementById("dashboardView"),
-      detail: document.getElementById("detailView"),
-      training: document.getElementById("trainingView"),
-      test: document.getElementById("testView"),
-      progress: document.getElementById("progressView")
+      dashboard: $("#dashboardView"),
+      detail: $("#detailView"),
+      training: $("#trainingView"),
+      test: $("#testView"),
+      progress: $("#progressView")
     };
-
     const state = {
-      selectedVerbId: VERBS[0].id,
-      trainMode: "flash",
-      hardOnly: false,
-      currentTrainingItem: null,
-      isRevealed: false,
+      view: "dashboard",
+      verb: "etre",
+      mode: "flash",
+      hard: false,
+      revealed: false,
+      item: null,
       test: null,
-      data: loadProgress()
+      data: load()
     };
 
-    function todayKey(date = new Date()) {
-      return date.toISOString().slice(0, 10);
+    function key(verbId, tenseId) {
+      return `${verbId}|${tenseId}`;
     }
 
-    function yesterdayKey() {
-      return new Date(Date.now() - DAY_MS).toISOString().slice(0, 10);
+    function pct(value, total) {
+      return total ? Math.round((value / total) * 100) : 0;
     }
 
-    function getFormKey(verbId, tenseId) {
-      return `${verbId}:${tenseId}`;
+    function today() {
+      return new Date().toISOString().slice(0, 10);
     }
 
-    function loadProgress() {
-      const fallback = { forms: {}, totalErrors: 0, streak: 0, lastStudyDate: null };
-      try {
-        return { ...fallback, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") };
-      } catch {
-        return fallback;
-      }
-    }
-
-    function saveProgress() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-    }
-
-    function ensureRecord(key) {
-      if (!state.data.forms[key]) {
-        state.data.forms[key] = {
-          attempts: 0,
-          correct: 0,
-          errors: 0,
-          ease: 2.5,
-          interval: 0,
-          due: Date.now(),
-          reps: 0,
-          lastAnswer: ""
+    function all() {
+      return VERBS.flatMap((verb) => TENSES.map(([id, label]) => {
+        const form = verb.f[id];
+        return {
+          key: key(verb.id, id),
+          verb,
+          tense: { id, label },
+          data: { form: form[0], ru: form[1], example: form[2], exampleRu: form[3] }
         };
-      }
-      return state.data.forms[key];
+      }));
     }
 
-    function markStudyDay() {
-      const today = todayKey();
-      if (state.data.lastStudyDate === today) return;
-      state.data.streak = state.data.lastStudyDate === yesterdayKey() ? state.data.streak + 1 : 1;
-      state.data.lastStudyDate = today;
+    function load() {
+      const base = { records: {}, streak: { count: 0, last: null } };
+      try {
+        return Object.assign(base, JSON.parse(localStorage.getItem(STORE) || "{}"));
+      } catch {
+        return base;
+      }
     }
 
-    function reviewForm(item, quality, userAnswer = "") {
-      const key = getFormKey(item.verb.id, item.tense.id);
-      const rec = ensureRecord(key);
-      const isCorrect = quality >= 3;
-      rec.attempts += 1;
-      rec.lastAnswer = userAnswer;
-      if (isCorrect) {
-        rec.correct += 1;
-        rec.reps += 1;
-        rec.ease = Math.max(1.3, rec.ease + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
-        rec.interval = rec.reps === 1 ? 1 : rec.reps === 2 ? 3 : Math.ceil(rec.interval * rec.ease);
-      } else {
-        rec.errors += 1;
-        rec.reps = 0;
-        rec.ease = Math.max(1.3, rec.ease - 0.2);
-        rec.interval = 0;
-        state.data.totalErrors += 1;
-      }
-      rec.due = Date.now() + Math.max(rec.interval, isCorrect ? 1 : 0) * DAY_MS;
-      markStudyDay();
-      saveProgress();
+    function save() {
+      localStorage.setItem(STORE, JSON.stringify(state.data));
       updateStats();
     }
 
-    function allItems() {
-      return VERBS.flatMap((verb) => TENSES.map((tense) => ({
-        verb,
-        tense,
-        data: verb.forms[tense.id],
-        key: getFormKey(verb.id, tense.id)
-      })));
+    function rec(itemKey) {
+      if (!state.data.records[itemKey]) {
+        state.data.records[itemKey] = { correct: 0, errors: 0, attempts: 0, ease: 2.5, interval: 0, due: 0, last: "" };
+      }
+      return state.data.records[itemKey];
     }
 
-    function getPracticePool() {
-      const now = Date.now();
-      let pool = allItems();
-      if (state.hardOnly) {
-        pool = pool.filter((item) => {
-          const rec = ensureRecord(item.key);
-          return rec.errors > 0 || rec.due <= now || rec.ease < 2.25;
-        });
+    function touchStreak() {
+      const streak = state.data.streak;
+      const current = today();
+      if (streak.last === current) return;
+      if (!streak.last) {
+        streak.count = 1;
       } else {
-        const due = pool.filter((item) => ensureRecord(item.key).due <= now);
-        if (due.length >= 4) pool = due;
+        const previousDate = new Date(streak.last);
+        const currentDate = new Date(current);
+        streak.count = (currentDate - previousDate) / 86400000 <= 1.5 ? streak.count + 1 : 1;
       }
-      return pool.sort((a, b) => {
-        const ra = ensureRecord(a.key);
-        const rb = ensureRecord(b.key);
-        return (ra.due - rb.due) || (rb.errors - ra.errors);
-      });
+      streak.last = current;
     }
 
-    function pickPracticeItem() {
-      const pool = getPracticePool();
-      return pool[Math.floor(Math.random() * pool.length)] || allItems()[0];
-    }
-
-    function normalize(value) {
-      return value
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "")
-        .replace(/[’'`´().]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    function acceptedAnswers(form) {
-      const base = normalize(form);
-      if (form.includes("(e)")) {
-        return [base, normalize(form.replace("(e)", "")), normalize(form.replace("(e)", "e"))];
-      }
-      return [base];
-    }
-
-    function isAnswerCorrect(item, value) {
-      const answer = normalize(value);
-      return acceptedAnswers(item.data.form).includes(answer);
-    }
-
-    function percent(value, total) {
-      return total === 0 ? 0 : Math.round((value / total) * 100);
-    }
-
-    function learnedCount() {
-      return allItems().filter((item) => {
-        const rec = ensureRecord(item.key);
-        return rec.correct >= 3 && rec.interval >= 3 && rec.errors <= rec.correct;
+    function learned() {
+      return all().filter((item) => {
+        const record = rec(item.key);
+        return record.correct >= 3 && record.interval >= 3;
       }).length;
     }
 
     function updateStats() {
-      const learned = learnedCount();
-      document.getElementById("learnedStat").textContent = `${percent(learned, TOTAL_FORMS)}%`;
-      document.getElementById("formsStat").textContent = `${learned}/${TOTAL_FORMS}`;
-      document.getElementById("errorsStat").textContent = String(state.data.totalErrors || 0);
-      document.getElementById("streakStat").textContent = `${state.data.streak || 0} дней`;
+      const items = all();
+      const errors = items.reduce((sum, item) => sum + rec(item.key).errors, 0);
+      const done = learned();
+      $("#learnedStat").textContent = `${pct(done, TOTAL)}%`;
+      $("#formsStat").textContent = `${done}/${TOTAL}`;
+      $("#errorsStat").textContent = errors;
+      $("#streakStat").textContent = `${state.data.streak.count || 0} дней`;
     }
 
-    function setView(name) {
-      Object.entries(views).forEach(([key, node]) => {
-        node.hidden = key !== name;
-      });
-      document.querySelectorAll(".tab").forEach((button) => {
-        button.setAttribute("aria-selected", String(button.dataset.view === name));
-      });
-      if (name === "dashboard") renderDashboard();
-      if (name === "training") renderTraining();
-      if (name === "test") renderTestStart();
-      if (name === "progress") renderProgress();
+    function review(item, quality, answer = "") {
+      const record = rec(item.key);
+      touchStreak();
+      record.attempts += 1;
+      record.last = today();
+      if (quality >= 4) {
+        record.correct += 1;
+        record.ease = Math.max(1.3, record.ease + 0.08);
+        record.interval = record.interval ? Math.ceil(record.interval * record.ease) : 1;
+      } else {
+        record.errors += 1;
+        record.correct = 0;
+        record.ease = Math.max(1.3, record.ease - 0.22);
+        record.interval = 0;
+        record.lastWrong = answer;
+      }
+      record.due = Date.now() + Math.max(1, record.interval) * 86400000;
+      save();
     }
 
-    function openVerb(verbId) {
-      state.selectedVerbId = verbId;
-      renderDetail();
-      Object.entries(views).forEach(([key, node]) => {
-        node.hidden = key !== "detail";
+    function normalize(value) {
+      return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[’']/g, "'")
+        .replace(/\(e\)/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function isCorrect(item, value) {
+      return normalize(value) === normalize(item.data.form);
+    }
+
+    function pool() {
+      const items = all();
+      const now = Date.now();
+      const due = items.filter((item) => rec(item.key).due <= now);
+      const hard = items.filter((item) => rec(item.key).errors > 0 || rec(item.key).ease < 2.25);
+      return state.hard ? (hard.length ? hard : items) : (due.length ? due : items);
+    }
+
+    function pick() {
+      const items = pool();
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function setView(view) {
+      state.view = view;
+      Object.values(views).forEach((node) => {
+        node.hidden = true;
       });
-      document.querySelectorAll(".tab").forEach((button) => button.setAttribute("aria-selected", "false"));
+      views[view].hidden = false;
+      $$(".tab").forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.view === view));
+      });
+      if (view === "dashboard") renderDashboard();
+      if (view === "detail") renderDetail();
+      if (view === "training") renderTraining();
+      if (view === "test") renderTestStart();
+      if (view === "progress") renderProgress();
     }
 
     function renderDashboard() {
       views.dashboard.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
             <h2>Dashboard</h2>
-            <p class="muted">Выберите глагол, чтобы открыть таблицу je-форм.</p>
+            <p class="muted">Выберите глагол и закрепляйте только je-формы.</p>
           </div>
-          <button class="btn primary" type="button" data-start-training>Начать тренировку</button>
+          <button class="btn primary" type="button" data-start>Начать тренировку</button>
         </div>
-        <div class="verb-grid">
-          ${VERBS.map((verb) => renderVerbCard(verb)).join("")}
-        </div>
+        <div class="grid">${VERBS.map(renderCard).join("")}</div>
       `;
-      views.dashboard.querySelector("[data-start-training]").addEventListener("click", () => setView("training"));
+      views.dashboard.querySelector("[data-start]").addEventListener("click", () => setView("training"));
       views.dashboard.querySelectorAll("[data-verb]").forEach((button) => {
-        button.addEventListener("click", () => openVerb(button.dataset.verb));
+        button.addEventListener("click", () => {
+          state.verb = button.dataset.verb;
+          setView("detail");
+        });
       });
     }
 
-    function renderVerbCard(verb) {
-      const items = TENSES.map((tense) => ensureRecord(getFormKey(verb.id, tense.id)));
-      const learned = items.filter((rec) => rec.correct >= 3 && rec.interval >= 3).length;
+    function renderCard(verb) {
+      const done = TENSES.filter(([id]) => {
+        const record = rec(key(verb.id, id));
+        return record.correct >= 3 && record.interval >= 3;
+      }).length;
       return `
-        <button class="verb-card" type="button" data-verb="${verb.id}">
-          <span class="verb-title"><strong>${verb.infinitive}</strong><span class="muted">${verb.ru}</span></span>
-          <span class="progress-line"><span class="progress-fill" style="--value:${percent(learned, TENSES.length)}%"></span></span>
-          <span class="muted">${learned}/${TENSES.length} форм закреплено</span>
+        <button class="card" type="button" data-verb="${verb.id}">
+          <span class="card-title"><strong>${verb.inf}</strong><span class="muted">${verb.ru}</span></span>
+          <span class="bar"><span class="fill" style="--value:${pct(done, TENSES.length)}%"></span></span>
+          <span class="muted">${done}/${TENSES.length} форм закреплено</span>
         </button>
       `;
     }
 
     function renderDetail() {
-      const verb = VERBS.find((item) => item.id === state.selectedVerbId) || VERBS[0];
+      const verb = VERBS.find((item) => item.id === state.verb) || VERBS[0];
       views.detail.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
-            <h2>${verb.infinitive}</h2>
+            <h2>${verb.inf}</h2>
             <p class="muted">${verb.ru} · только формы с je</p>
           </div>
           <div class="actions">
@@ -894,41 +720,29 @@
             <button class="btn primary" type="button" data-add>Добавить в тренировку</button>
           </div>
         </div>
-        <div class="detail-grid">
-          <div>
-            <table class="forms-table">
-              <thead>
-                <tr><th>Время</th><th>Форма</th><th>Перевод</th><th></th></tr>
-              </thead>
-              <tbody>
-                ${TENSES.map((tense) => {
-                  const form = verb.forms[tense.id];
-                  return `
-                    <tr>
-                      <td>${tense.label}</td>
-                      <td class="form-text">${form.form}</td>
-                      <td>${form.ru}</td>
-                      <td><button class="btn ghost" type="button" data-say="${form.form}">Прослушать</button></td>
-                    </tr>
-                  `;
-                }).join("")}
-              </tbody>
-            </table>
-          </div>
+        <div class="detail">
+          <table>
+            <thead><tr><th>Время</th><th>Форма</th><th>Перевод</th><th></th></tr></thead>
+            <tbody>
+              ${TENSES.map(([id, label]) => `
+                <tr>
+                  <td>${label}</td>
+                  <td class="form">${verb.f[id][0]}</td>
+                  <td>${verb.f[id][1]}</td>
+                  <td><button class="btn ghost" type="button" data-say="${verb.f[id][0]}">Прослушать</button></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
           <div>
             <h3>Примеры</h3>
-            <ul class="example-list">
-              ${TENSES.map((tense) => {
-                const form = verb.forms[tense.id];
-                return `<li><strong>${form.example}</strong><br><span class="muted">${form.exampleRu}</span></li>`;
-              }).join("")}
-            </ul>
+            <ul class="list">${TENSES.map(([id]) => `<li><strong>${verb.f[id][2]}</strong><br><span class="muted">${verb.f[id][3]}</span></li>`).join("")}</ul>
           </div>
         </div>
       `;
       views.detail.querySelector("[data-back]").addEventListener("click", () => setView("dashboard"));
       views.detail.querySelector("[data-add]").addEventListener("click", () => {
-        state.hardOnly = false;
+        state.hard = false;
         setView("training");
       });
       views.detail.querySelectorAll("[data-say]").forEach((button) => {
@@ -938,99 +752,92 @@
 
     function speak(text) {
       if (!("speechSynthesis" in window)) return;
-      window.speechSynthesis.cancel();
+      speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text.replace("(e)", ""));
       utterance.lang = "fr-FR";
       utterance.rate = 0.88;
-      window.speechSynthesis.speak(utterance);
+      speechSynthesis.speak(utterance);
     }
 
     function renderTraining() {
-      state.currentTrainingItem = state.currentTrainingItem || pickPracticeItem();
-      const item = state.currentTrainingItem;
+      state.item = state.item || pick();
       views.training.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
             <h2>Training Mode</h2>
-            <p class="muted">${getPracticePool().length} форм в текущей очереди</p>
+            <p class="muted">${pool().length} форм в очереди</p>
           </div>
-          <div class="toolbar">
-            <button class="chip" type="button" data-mode="flash" aria-pressed="${state.trainMode === "flash"}">Flashcards</button>
-            <button class="chip" type="button" data-mode="reverse" aria-pressed="${state.trainMode === "reverse"}">Reverse</button>
-            <button class="chip" type="button" data-mode="input" aria-pressed="${state.trainMode === "input"}">Input</button>
-            <button class="chip" type="button" data-hard aria-pressed="${state.hardOnly}">Сложные</button>
+          <div class="chips">
+            <button class="chip" type="button" data-mode="flash" aria-pressed="${state.mode === "flash"}">Flashcards</button>
+            <button class="chip" type="button" data-mode="reverse" aria-pressed="${state.mode === "reverse"}">Reverse</button>
+            <button class="chip" type="button" data-mode="input" aria-pressed="${state.mode === "input"}">Input</button>
+            <button class="chip" type="button" data-hard aria-pressed="${state.hard}">Сложные</button>
           </div>
         </div>
-        <div class="training-card" id="trainingCard"></div>
+        <div class="train-card" id="trainCard"></div>
       `;
       views.training.querySelectorAll("[data-mode]").forEach((button) => {
         button.addEventListener("click", () => {
-          state.trainMode = button.dataset.mode;
-          state.isRevealed = false;
-          state.currentTrainingItem = pickPracticeItem();
+          state.mode = button.dataset.mode;
+          state.revealed = false;
+          state.item = pick();
           renderTraining();
         });
       });
       views.training.querySelector("[data-hard]").addEventListener("click", () => {
-        state.hardOnly = !state.hardOnly;
-        state.isRevealed = false;
-        state.currentTrainingItem = pickPracticeItem();
+        state.hard = !state.hard;
+        state.revealed = false;
+        state.item = pick();
         renderTraining();
       });
-      renderTrainingCard(item);
+      renderTrainingCard(state.item);
     }
 
     function renderTrainingCard(item) {
-      const card = document.getElementById("trainingCard");
-      if (state.trainMode === "input") {
+      const card = $("#trainCard");
+      if (state.mode === "input") {
         card.innerHTML = `
           <div class="prompt">
-            <span class="prompt-meta">${item.verb.infinitive} · ${item.tense.label}</span>
+            <span class="muted">${item.verb.inf} · ${item.tense.label}</span>
             <span class="prompt-main">${item.data.ru}</span>
-            <span class="prompt-meta">Введите французскую je-форму</span>
+            <span class="muted">Введите французскую je-форму</span>
           </div>
           <form class="input-row" id="answerForm">
-            <input class="text-input" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+            <input class="input" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required>
             <button class="btn primary" type="submit">Проверить</button>
           </form>
           <div class="feedback" id="feedback" hidden></div>
         `;
-        document.getElementById("answerForm").addEventListener("submit", (event) => {
+        $("#answerForm").addEventListener("submit", (event) => {
           event.preventDefault();
-          const input = event.currentTarget.elements.answer;
-          const ok = isAnswerCorrect(item, input.value);
-          reviewForm(item, ok ? 5 : 2, input.value);
-          document.getElementById("feedback").hidden = false;
-          document.getElementById("feedback").innerHTML = ok
-            ? `<span class="result-ok">Верно.</span> ${item.data.form}`
-            : `<span class="result-bad">Ошибка.</span> Правильно: <strong>${item.data.form}</strong>`;
-          setTimeout(nextTrainingItem, ok ? 700 : 1300);
+          const value = event.currentTarget.elements.answer.value;
+          const ok = isCorrect(item, value);
+          review(item, ok ? 5 : 2, value);
+          $("#feedback").hidden = false;
+          $("#feedback").innerHTML = ok
+            ? `<span class="ok">Верно.</span> ${item.data.form}`
+            : `<span class="no">Ошибка.</span> Правильно: <strong>${item.data.form}</strong>`;
+          setTimeout(nextTraining, ok ? 700 : 1300);
         });
         card.querySelector("input").focus();
         return;
       }
 
-      const front = state.trainMode === "flash"
-        ? item.data.form
-        : `${item.verb.ru} · ${item.data.ru}`;
-      const meta = state.trainMode === "flash"
-        ? `${item.verb.infinitive} · ${item.tense.label}`
-        : `${item.verb.infinitive} · ${item.tense.label}`;
-
-      if (!state.isRevealed) {
+      const front = state.mode === "flash" ? item.data.form : `${item.verb.ru} · ${item.data.ru}`;
+      if (!state.revealed) {
         card.innerHTML = `
           <div class="prompt">
-            <span class="prompt-meta">${meta}</span>
+            <span class="muted">${item.verb.inf} · ${item.tense.label}</span>
             <span class="prompt-main">${front}</span>
-            <span class="prompt-meta">${state.trainMode === "flash" ? "Вспомните перевод" : "Вспомните французскую форму"}</span>
+            <span class="muted">${state.mode === "flash" ? "Вспомните перевод" : "Вспомните французскую форму"}</span>
           </div>
           <div class="actions">
-            <button class="btn primary" type="button" data-reveal>Показать</button>
+            <button class="btn primary" type="button" data-show>Показать</button>
             <button class="btn ghost" type="button" data-say>Прослушать</button>
           </div>
         `;
-        card.querySelector("[data-reveal]").addEventListener("click", () => {
-          state.isRevealed = true;
+        card.querySelector("[data-show]").addEventListener("click", () => {
+          state.revealed = true;
           renderTrainingCard(item);
         });
         card.querySelector("[data-say]").addEventListener("click", () => speak(item.data.form));
@@ -1039,41 +846,48 @@
 
       card.innerHTML = `
         <div class="prompt">
-          <span class="prompt-meta">${item.verb.infinitive} · ${item.tense.label}</span>
+          <span class="muted">${item.verb.inf} · ${item.tense.label}</span>
           <span class="prompt-main">${item.data.form}</span>
-          <span class="prompt-meta">${item.data.ru}</span>
+          <span class="muted">${item.data.ru}</span>
         </div>
         <div class="actions">
-          <button class="btn danger" type="button" data-quality="2">Сложно</button>
-          <button class="btn success" type="button" data-quality="4">Помню</button>
+          <button class="btn bad" type="button" data-quality="2">Сложно</button>
+          <button class="btn good" type="button" data-quality="4">Помню</button>
           <button class="btn primary" type="button" data-quality="5">Легко</button>
           <button class="btn ghost" type="button" data-say>Прослушать</button>
         </div>
       `;
       card.querySelectorAll("[data-quality]").forEach((button) => {
         button.addEventListener("click", () => {
-          reviewForm(item, Number(button.dataset.quality));
-          nextTrainingItem();
+          review(item, Number(button.dataset.quality));
+          nextTraining();
         });
       });
       card.querySelector("[data-say]").addEventListener("click", () => speak(item.data.form));
     }
 
-    function nextTrainingItem() {
-      state.currentTrainingItem = pickPracticeItem();
-      state.isRevealed = false;
+    function nextTraining() {
+      state.item = pick();
+      state.revealed = false;
       renderTraining();
     }
 
-    function buildQuestion(type = null) {
-      const item = allItems()[Math.floor(Math.random() * TOTAL_FORMS)];
-      const qType = type || ["choice", "input", "match"][Math.floor(Math.random() * 3)];
-      return { type: qType, item };
+    function shuffle(items) {
+      const copy = items.slice();
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swap = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swap]] = [copy[swap], copy[index]];
+      }
+      return copy;
+    }
+
+    function question(type = null) {
+      return { type: type || ["choice", "input", "match"][Math.floor(Math.random() * 3)], item: all()[Math.floor(Math.random() * TOTAL)] };
     }
 
     function renderTestStart() {
       views.test.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
             <h2>Мини-тест</h2>
             <p class="muted">Смешанные вопросы по всем je-формам.</p>
@@ -1094,7 +908,7 @@
         count,
         index: 0,
         score: 0,
-        questions: Array.from({ length: count }, (_, index) => buildQuestion(index % 3 === 2 ? "match" : null)),
+        questions: Array.from({ length: count }, (_, index) => question(index % 3 === 2 ? "match" : null)),
         answers: []
       };
       renderTestQuestion();
@@ -1106,29 +920,27 @@
         renderTestResult();
         return;
       }
-      const question = test.questions[test.index];
-      const item = question.item;
-      const commonHeader = `
-        <div class="panel-header">
+      const current = test.questions[test.index];
+      const item = current.item;
+      const head = `
+        <div class="panel-head">
           <div>
             <h2>Вопрос ${test.index + 1}/${test.count}</h2>
-            <p class="muted">${item.verb.infinitive} · ${item.tense.label}</p>
+            <p class="muted">${item.verb.inf} · ${item.tense.label}</p>
           </div>
         </div>
       `;
 
-      if (question.type === "choice") {
-        const choices = shuffle([item.data.form, ...shuffle(allItems().filter((x) => x.key !== item.key)).slice(0, 3).map((x) => x.data.form)]);
+      if (current.type === "choice") {
+        const choices = shuffle([item.data.form, ...shuffle(all().filter((row) => row.key !== item.key)).slice(0, 3).map((row) => row.data.form)]);
         views.test.innerHTML = `
-          ${commonHeader}
-          <div class="training-card">
+          ${head}
+          <div class="train-card">
             <div class="prompt">
               <span class="prompt-main">${item.data.ru}</span>
-              <span class="prompt-meta">Выберите французскую форму</span>
+              <span class="muted">Выберите французскую форму</span>
             </div>
-            <div class="choice-grid">
-              ${choices.map((choice) => `<button class="btn" type="button" data-choice="${choice}">${choice}</button>`).join("")}
-            </div>
+            <div class="choice">${choices.map((choice) => `<button class="btn" type="button" data-choice="${choice}">${choice}</button>`).join("")}</div>
             <div class="feedback" id="testFeedback" hidden></div>
           </div>
         `;
@@ -1138,21 +950,20 @@
         return;
       }
 
-      if (question.type === "match") {
-        const rows = shuffle(allItems()).slice(0, 3);
-        question.rows = rows;
+      if (current.type === "match") {
+        const rows = shuffle(all()).slice(0, 3);
         const options = shuffle(rows.map((row) => row.data.form));
         views.test.innerHTML = `
-          ${commonHeader}
-          <div class="training-card">
+          ${head}
+          <div class="train-card">
             <div class="prompt">
               <span class="prompt-main">Сопоставление</span>
-              <span class="prompt-meta">Подберите форму к каждому переводу</span>
+              <span class="muted">Подберите форму к каждому переводу</span>
             </div>
-            <form class="match-grid" id="matchForm">
+            <form class="match" id="matchForm">
               ${rows.map((row, index) => `
                 <label class="match-row">
-                  <span>${row.verb.infinitive} · ${row.tense.label}<br><strong>${row.data.ru}</strong></span>
+                  <span>${row.verb.inf} · ${row.tense.label}<br><strong>${row.data.ru}</strong></span>
                   <select class="select" name="match${index}" data-key="${row.key}">
                     <option value="">Выберите форму</option>
                     ${options.map((option) => `<option value="${option}">${option}</option>`).join("")}
@@ -1164,16 +975,16 @@
             <div class="feedback" id="testFeedback" hidden></div>
           </div>
         `;
-        document.getElementById("matchForm").addEventListener("submit", (event) => {
+        $("#matchForm").addEventListener("submit", (event) => {
           event.preventDefault();
           const selects = Array.from(event.currentTarget.querySelectorAll("select"));
           const ok = selects.every((select) => {
-            const target = allItems().find((row) => row.key === select.dataset.key);
+            const target = all().find((row) => row.key === select.dataset.key);
             return target && select.value === target.data.form;
           });
           selects.forEach((select) => {
-            const target = allItems().find((row) => row.key === select.dataset.key);
-            if (target) reviewForm(target, select.value === target.data.form ? 5 : 2, select.value);
+            const target = all().find((row) => row.key === select.dataset.key);
+            if (target) review(target, select.value === target.data.form ? 5 : 2, select.value);
           });
           answerTest(ok, "match", true);
         });
@@ -1181,39 +992,38 @@
       }
 
       views.test.innerHTML = `
-        ${commonHeader}
-        <div class="training-card">
+        ${head}
+        <div class="train-card">
           <div class="prompt">
             <span class="prompt-main">${item.data.ru}</span>
-            <span class="prompt-meta">Введите французскую je-форму</span>
+            <span class="muted">Введите французскую je-форму</span>
           </div>
-          <form class="input-row" id="testInputForm">
-            <input class="text-input" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+          <form class="input-row" id="testInput">
+            <input class="input" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required>
             <button class="btn primary" type="submit">Проверить</button>
           </form>
           <div class="feedback" id="testFeedback" hidden></div>
         </div>
       `;
-      document.getElementById("testInputForm").addEventListener("submit", (event) => {
+      $("#testInput").addEventListener("submit", (event) => {
         event.preventDefault();
-        const value = event.currentTarget.elements.answer.value;
-        answerTest(isAnswerCorrect(item, value), value);
+        answerTest(isCorrect(item, event.currentTarget.elements.answer.value), event.currentTarget.elements.answer.value);
       });
       views.test.querySelector("input").focus();
     }
 
     function answerTest(ok, answer, skipReview = false) {
       const test = state.test;
-      const question = test.questions[test.index];
-      const item = question.item;
+      const current = test.questions[test.index];
+      const item = current.item;
       test.answers.push({ ok, answer, correct: item.data.form, item });
       if (ok) test.score += 1;
-      if (!skipReview) reviewForm(item, ok ? 5 : 2, String(answer || ""));
-      const feedback = document.getElementById("testFeedback");
+      if (!skipReview) review(item, ok ? 5 : 2, String(answer || ""));
+      const feedback = $("#testFeedback");
       feedback.hidden = false;
-      feedback.innerHTML = question.type === "match"
-        ? (ok ? `<span class="result-ok">Верно.</span>` : `<span class="result-bad">Есть ошибки в сопоставлении.</span>`)
-        : (ok ? `<span class="result-ok">Верно.</span>` : `<span class="result-bad">Ошибка.</span> Правильно: <strong>${item.data.form}</strong>`);
+      feedback.innerHTML = current.type === "match"
+        ? (ok ? `<span class="ok">Верно.</span>` : `<span class="no">Есть ошибки в сопоставлении.</span>`)
+        : (ok ? `<span class="ok">Верно.</span>` : `<span class="no">Ошибка.</span> Правильно: <strong>${item.data.form}</strong>`);
       setTimeout(() => {
         test.index += 1;
         renderTestQuestion();
@@ -1223,18 +1033,18 @@
     function renderTestResult() {
       const test = state.test;
       views.test.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
             <h2>Результат</h2>
             <p class="muted">${test.score}/${test.count} правильных ответов</p>
           </div>
           <button class="btn primary" type="button" data-again>Ещё тест</button>
         </div>
-        <ul class="error-list">
+        <ul class="list">
           ${test.answers.map((answer, index) => `
             <li>
-              <strong>${index + 1}. ${answer.item.verb.infinitive} · ${answer.item.tense.label}</strong><br>
-              <span class="${answer.ok ? "result-ok" : "result-bad"}">${answer.ok ? "верно" : "ошибка"}</span>
+              <strong>${index + 1}. ${answer.item.verb.inf} · ${answer.item.tense.label}</strong><br>
+              <span class="${answer.ok ? "ok" : "no"}">${answer.ok ? "верно" : "ошибка"}</span>
               <span class="muted"> · ${answer.correct}</span>
             </li>
           `).join("")}
@@ -1244,134 +1054,70 @@
     }
 
     function renderProgress() {
-      const hard = allItems()
-        .map((item) => ({ item, rec: ensureRecord(item.key) }))
-        .filter(({ rec }) => rec.errors > 0 || rec.ease < 2.25)
-        .sort((a, b) => b.rec.errors - a.rec.errors)
+      const hard = all()
+        .map((item) => ({ item, record: rec(item.key) }))
+        .filter(({ record }) => record.errors > 0 || record.ease < 2.25)
+        .sort((a, b) => b.record.errors - a.record.errors)
         .slice(0, 10);
       views.progress.innerHTML = `
-        <div class="panel-header">
+        <div class="panel-head">
           <div>
             <h2>Прогресс</h2>
-            <p class="muted">Выучено ${learnedCount()} из ${TOTAL_FORMS} форм.</p>
+            <p class="muted">Выучено ${learned()} из ${TOTAL} форм.</p>
           </div>
           <button class="btn primary" type="button" data-hard-training>Только сложные</button>
         </div>
-        <div class="progress-line"><span class="progress-fill" style="--value:${percent(learnedCount(), TOTAL_FORMS)}%"></span></div>
+        <div class="bar"><span class="fill" style="--value:${pct(learned(), TOTAL)}%"></span></div>
         <h3>Статистика ошибок</h3>
-        <ul class="error-list">
-          ${hard.length ? hard.map(({ item, rec }) => `
+        <ul class="list">
+          ${hard.length ? hard.map(({ item, record }) => `
             <li>
-              <strong>${item.data.form}</strong> · ${item.verb.infinitive} · ${item.tense.label}<br>
-              <span class="muted">Ошибок: ${rec.errors}, попыток: ${rec.attempts}, ease: ${rec.ease.toFixed(2)}</span>
+              <strong>${item.data.form}</strong> · ${item.verb.inf} · ${item.tense.label}<br>
+              <span class="muted">Ошибок: ${record.errors}, попыток: ${record.attempts}, ease: ${record.ease.toFixed(2)}</span>
             </li>
           `).join("") : `<li>Ошибок пока нет.</li>`}
         </ul>
       `;
       views.progress.querySelector("[data-hard-training]").addEventListener("click", () => {
-        state.hardOnly = true;
-        state.currentTrainingItem = pickPracticeItem();
+        state.hard = true;
+        state.item = pick();
         setView("training");
       });
     }
 
-    function shuffle(items) {
-      const copy = items.slice();
-      for (let i = copy.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
     function applyTheme(theme) {
       document.documentElement.dataset.theme = theme;
-      document.getElementById("themeBtn").setAttribute("aria-pressed", String(theme === "dark"));
-      localStorage.setItem(THEME_KEY, theme);
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#101318" : "#f6f7fb");
+      $("#themeBtn").setAttribute("aria-pressed", String(theme === "dark"));
+      localStorage.setItem(THEME, theme);
     }
 
-    document.querySelectorAll(".tab").forEach((button) => {
+    $$(".tab").forEach((button) => {
       button.addEventListener("click", () => setView(button.dataset.view));
     });
 
-    document.getElementById("themeBtn").addEventListener("click", () => {
-      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-      applyTheme(next);
+    $("#themeBtn").addEventListener("click", () => {
+      applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
     });
 
-    document.getElementById("resetBtn").addEventListener("click", () => {
+    $("#resetBtn").addEventListener("click", () => {
       if (!confirm("Сбросить локальный прогресс Je verbs?")) return;
-      localStorage.removeItem(STORAGE_KEY);
-      state.data = loadProgress();
-      state.currentTrainingItem = null;
+      localStorage.removeItem(STORE);
+      state.data = load();
+      state.item = null;
       updateStats();
       setView("dashboard");
     });
 
-    const storedTheme = localStorage.getItem(THEME_KEY);
-    applyTheme(storedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+    applyTheme(localStorage.getItem(THEME) || "dark");
     updateStats();
     renderDashboard();
 
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      window.addEventListener("load", () => {
+      addEventListener("load", () => {
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
   </script>
-=======
-    <div class="suite"><a class="badge" href="https://polpal1623.github.io/FrenchLibrary/">French Learning Suite</a><div class="actions"><a class="btn ghost" href="https://polpal1623.github.io/FrenchLibrary/">Все приложения</a><a class="btn ghost" href="https://github.com/PolPal1623/JeVerbs">GitHub</a></div></div>
-    <header class="hero"><div class="hero-top"><div><h1>Je verbs</h1><p class="sub">10 базовых французских глаголов уровня A1-A2, 5 времён и только формы с <b>je</b>, чтобы быстрее довести их до автоматизма.</p></div><div class="actions"><button class="btn" id="themeBtn">Тема</button><button class="btn ghost" id="resetBtn">Сброс</button></div></div><nav class="tabs" aria-label="Разделы"><button class="tab" data-view="dashboard" aria-selected="true">Глаголы</button><button class="tab" data-view="training" aria-selected="false">Тренировка</button><button class="tab" data-view="test" aria-selected="false">Мини-тест</button><button class="tab" data-view="progress" aria-selected="false">Прогресс</button></nav></header>
-    <section class="stats"><article class="stat"><span class="label">Выучено</span><strong class="value" id="learnedStat">0%</strong></article><article class="stat"><span class="label">Форм</span><strong class="value" id="formsStat">0/50</strong></article><article class="stat"><span class="label">Ошибок</span><strong class="value" id="errorsStat">0</strong></article><article class="stat"><span class="label">Streak</span><strong class="value" id="streakStat">0 дней</strong></article></section>
-    <section class="panel" id="dashboardView"></section><section class="panel" id="detailView" hidden></section><section class="panel" id="trainingView" hidden></section><section class="panel" id="testView" hidden></section><section class="panel" id="progressView" hidden></section>
-  </main>
-<script>
-const TENSES=[['present','Présent'],['futurProche','Futur proche'],['passeCompose','Passé composé'],['imparfait','Imparfait'],['futurSimple','Futur simple']];
-const VERBS=[
-{id:'etre',inf:'être',ru:'быть',f:{present:['je suis','я есть / являюсь','Je suis prêt.','Я готов.'],futurProche:['je vais être','я собираюсь быть','Je vais être à la maison.','Я буду дома.'],passeCompose:["j'ai été",'я был(а)',"J'ai été malade.",'Я был болен.'],imparfait:["j'étais",'я был(а)',"J'étais fatigué.",'Я был уставшим.'],futurSimple:['je serai','я буду','Je serai là demain.','Я буду там завтра.']}},
-{id:'avoir',inf:'avoir',ru:'иметь',f:{present:["j'ai",'у меня есть',"J'ai un livre.",'У меня есть книга.'],futurProche:['je vais avoir','у меня скоро будет','Je vais avoir le temps.','У меня будет время.'],passeCompose:["j'ai eu",'у меня было',"J'ai eu une idée.",'У меня появилась идея.'],imparfait:["j'avais",'у меня было',"J'avais froid.",'Мне было холодно.'],futurSimple:["j'aurai",'у меня будет',"J'aurai besoin d'aide.",'Мне понадобится помощь.']}},
-{id:'aller',inf:'aller',ru:'идти / ехать',f:{present:['je vais','я иду / еду','Je vais au travail.','Я иду на работу.'],futurProche:['je vais aller','я собираюсь пойти','Je vais aller au marché.','Я собираюсь пойти на рынок.'],passeCompose:['je suis allé(e)','я сходил(а) / ездил(а)','Je suis allé au parc.','Я ходил в парк.'],imparfait:["j'allais",'я ходил(а) / шёл',"J'allais souvent ici.",'Я часто ходил сюда.'],futurSimple:["j'irai",'я пойду / поеду',"J'irai demain.",'Я пойду завтра.']}},
-{id:'faire',inf:'faire',ru:'делать',f:{present:['je fais','я делаю','Je fais mes devoirs.','Я делаю домашнее задание.'],futurProche:['je vais faire','я собираюсь сделать','Je vais faire le dîner.','Я собираюсь приготовить ужин.'],passeCompose:["j'ai fait",'я сделал(а)',"J'ai fait une pause.",'Я сделал перерыв.'],imparfait:['je faisais','я делал(а)','Je faisais du sport.','Я занимался спортом.'],futurSimple:['je ferai','я сделаю','Je ferai attention.','Я буду внимателен.']}},
-{id:'dire',inf:'dire',ru:'сказать / говорить',f:{present:['je dis','я говорю','Je dis la vérité.','Я говорю правду.'],futurProche:['je vais dire','я собираюсь сказать','Je vais dire bonjour.','Я собираюсь поздороваться.'],passeCompose:["j'ai dit",'я сказал(а)',"J'ai dit merci.",'Я сказал спасибо.'],imparfait:['je disais','я говорил(а)','Je disais la même chose.','Я говорил то же самое.'],futurSimple:['je dirai','я скажу','Je dirai oui.','Я скажу да.']}},
-{id:'devoir',inf:'devoir',ru:'быть должным',f:{present:['je dois','я должен / должна','Je dois partir.','Я должен уйти.'],futurProche:['je vais devoir','мне придётся','Je vais devoir attendre.','Мне придётся ждать.'],passeCompose:["j'ai dû",'мне пришлось',"J'ai dû partir tôt.",'Мне пришлось уйти рано.'],imparfait:['je devais','я должен был','Je devais travailler.','Я должен был работать.'],futurSimple:['je devrai','я должен буду','Je devrai choisir.','Я должен буду выбрать.']}},
-{id:'pouvoir',inf:'pouvoir',ru:'мочь',f:{present:['je peux','я могу','Je peux aider.','Я могу помочь.'],futurProche:['je vais pouvoir','я скоро смогу','Je vais pouvoir venir.','Я смогу прийти.'],passeCompose:["j'ai pu",'я смог(ла)',"J'ai pu finir.",'Я смог закончить.'],imparfait:['je pouvais','я мог(ла)','Je pouvais comprendre.','Я мог понять.'],futurSimple:['je pourrai','я смогу','Je pourrai répondre.','Я смогу ответить.']}},
-{id:'vouloir',inf:'vouloir',ru:'хотеть',f:{present:['je veux','я хочу','Je veux apprendre.','Я хочу учиться.'],futurProche:['je vais vouloir','я захочу','Je vais vouloir essayer.','Я захочу попробовать.'],passeCompose:["j'ai voulu",'я захотел(а)',"J'ai voulu comprendre.",'Я захотел понять.'],imparfait:['je voulais','я хотел(а)','Je voulais rester.','Я хотел остаться.'],futurSimple:['je voudrai','я захочу','Je voudrai parler.','Я захочу поговорить.']}},
-{id:'savoir',inf:'savoir',ru:'знать / уметь',f:{present:['je sais','я знаю / умею','Je sais nager.','Я умею плавать.'],futurProche:['je vais savoir','я узнаю','Je vais savoir la réponse.','Я узнаю ответ.'],passeCompose:["j'ai su",'я узнал(а)',"J'ai su la nouvelle.",'Я узнал новость.'],imparfait:['je savais','я знал(а)','Je savais déjà.','Я уже знал.'],futurSimple:['je saurai','я буду знать','Je saurai quoi faire.','Я буду знать, что делать.']}},
-{id:'prendre',inf:'prendre',ru:'брать',f:{present:['je prends','я беру','Je prends un café.','Я беру кофе.'],futurProche:['je vais prendre','я собираюсь взять','Je vais prendre le bus.','Я собираюсь сесть на автобус.'],passeCompose:["j'ai pris",'я взял(а)',"J'ai pris une photo.",'Я сделал фото.'],imparfait:['je prenais','я брал(а)','Je prenais le train.','Я ездил на поезде.'],futurSimple:['je prendrai','я возьму','Je prendrai rendez-vous.','Я запишусь на встречу.']}}
-];
-const STORE='jeVerbsProgress.v1',THEME='jeVerbsTheme.v1',TOTAL=VERBS.length*TENSES.length;
-const views={dashboard:$('#dashboardView'),detail:$('#detailView'),training:$('#trainingView'),test:$('#testView'),progress:$('#progressView')};
-const state={view:'dashboard',verb:'etre',mode:'flash',hard:false,revealed:false,item:null,test:null,data:load()};
-function $(s){return document.querySelector(s)}function $$(s){return [...document.querySelectorAll(s)]}function key(v,t){return v+'|'+t}function pct(a,b){return b?Math.round(a/b*100):0}function today(){return new Date().toISOString().slice(0,10)}
-function all(){return VERBS.flatMap(v=>TENSES.map(([id,label])=>{let a=v.f[id];return{key:key(v.id,id),v,t:{id,label},d:{form:a[0],ru:a[1],ex:a[2],exRu:a[3]}}}))}
-function load(){let base={records:{},streak:{count:0,last:null}};try{return Object.assign(base,JSON.parse(localStorage.getItem(STORE)||'{}'))}catch{return base}}
-function save(){localStorage.setItem(STORE,JSON.stringify(state.data));updateStats()}
-function rec(k){return state.data.records[k]||(state.data.records[k]={correct:0,errors:0,attempts:0,ease:2.5,interval:0,due:0,last:''})}
-function touch(){let s=state.data.streak,d=today();if(s.last===d)return;if(!s.last){s.count=1}else{let prev=new Date(s.last),now=new Date(d);s.count=((now-prev)/86400000<=1.5)?s.count+1:1}s.last=d}
-function learned(){return all().filter(i=>{let r=rec(i.key);return r.correct>=3&&r.interval>=3}).length}
-function updateStats(){let items=all(),errs=items.reduce((n,i)=>n+rec(i.key).errors,0),l=learned();$('#learnedStat').textContent=pct(l,TOTAL)+'%';$('#formsStat').textContent=l+'/'+TOTAL;$('#errorsStat').textContent=errs;$('#streakStat').textContent=(state.data.streak.count||0)+' дней'}
-function review(item,q,answer=''){let r=rec(item.key);touch();r.attempts++;r.last=today();if(q>=4){r.correct++;r.ease=Math.max(1.3,r.ease+.08);r.interval=r.interval?Math.ceil(r.interval*r.ease):1}else{r.errors++;r.correct=0;r.ease=Math.max(1.3,r.ease-.22);r.interval=0;r.lastWrong=answer}r.due=Date.now()+Math.max(1,r.interval)*86400000;save()}
-function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,"'").replace(/\(e\)/g,'').replace(/\s+/g,' ').trim()}function correct(i,v){return norm(v)===norm(i.d.form)}
-function pool(){let items=all(),now=Date.now(),due=items.filter(i=>rec(i.key).due<=now),hard=items.filter(i=>rec(i.key).errors>0||rec(i.key).ease<2.25);return state.hard?(hard.length?hard:items):(due.length?due:items)}
-function pick(){let p=pool();return p[Math.floor(Math.random()*p.length)]}
-function setView(v){state.view=v;Object.values(views).forEach(x=>x.hidden=true);views[v].hidden=false;$$('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===v));if(v==='dashboard')renderDash();if(v==='detail')renderDetail();if(v==='training')renderTrain();if(v==='test')renderTestStart();if(v==='progress')renderProgress()}
-function renderDash(){views.dashboard.innerHTML=`<div class="panel-head"><div><h2>Dashboard</h2><p class="muted">Выберите глагол и закрепляйте только je-формы.</p></div><button class="btn primary" data-start>Начать тренировку</button></div><div class="grid">${VERBS.map(v=>card(v)).join('')}</div>`;views.dashboard.querySelector('[data-start]').onclick=()=>setView('training');$$('[data-verb]').forEach(b=>b.onclick=()=>{state.verb=b.dataset.verb;setView('detail')})}
-function card(v){let l=TENSES.filter(([id])=>{let r=rec(key(v.id,id));return r.correct>=3&&r.interval>=3}).length;return `<button class="card" data-verb="${v.id}"><span class="card-title"><strong>${v.inf}</strong><span class="muted">${v.ru}</span></span><span class="bar"><span class="fill" style="--v:${pct(l,TENSES.length)}%"></span></span><span class="muted">${l}/${TENSES.length} форм закреплено</span></button>`}
-function renderDetail(){let v=VERBS.find(x=>x.id===state.verb)||VERBS[0];views.detail.innerHTML=`<div class="panel-head"><div><h2>${v.inf}</h2><p class="muted">${v.ru} · только формы с je</p></div><div class="actions"><button class="btn ghost" data-back>Назад</button><button class="btn primary" data-add>Добавить в тренировку</button></div></div><div class="detail"><table><thead><tr><th>Время</th><th>Форма</th><th>Перевод</th><th></th></tr></thead><tbody>${TENSES.map(([id,label])=>`<tr><td>${label}</td><td class="form">${v.f[id][0]}</td><td>${v.f[id][1]}</td><td><button class="btn ghost" data-say="${v.f[id][0]}">Прослушать</button></td></tr>`).join('')}</tbody></table><div><h3>Примеры</h3><ul class="list">${TENSES.map(([id])=>`<li><strong>${v.f[id][2]}</strong><br><span class="muted">${v.f[id][3]}</span></li>`).join('')}</ul></div></div>`;views.detail.querySelector('[data-back]').onclick=()=>setView('dashboard');views.detail.querySelector('[data-add]').onclick=()=>{state.hard=false;setView('training')};$$('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say))}
-function speak(text){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text.replace('(e)',''));u.lang='fr-FR';u.rate=.88;speechSynthesis.speak(u)}
-function renderTrain(){state.item=state.item||pick();let i=state.item;views.training.innerHTML=`<div class="panel-head"><div><h2>Training Mode</h2><p class="muted">${pool().length} форм в очереди</p></div><div class="chips"><button class="chip" data-mode="flash" aria-pressed="${state.mode==='flash'}">Flashcards</button><button class="chip" data-mode="reverse" aria-pressed="${state.mode==='reverse'}">Reverse</button><button class="chip" data-mode="input" aria-pressed="${state.mode==='input'}">Input</button><button class="chip" data-hard aria-pressed="${state.hard}">Сложные</button></div></div><div class="train-card" id="trainCard"></div>`;$$('[data-mode]').forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;state.revealed=false;state.item=pick();renderTrain()});views.training.querySelector('[data-hard]').onclick=()=>{state.hard=!state.hard;state.revealed=false;state.item=pick();renderTrain()};renderTrainCard(i)}
-function renderTrainCard(i){let c=$('#trainCard');if(state.mode==='input'){c.innerHTML=`<div class="prompt"><span class="muted">${i.v.inf} · ${i.t.label}</span><span class="prompt-main">${i.d.ru}</span><span class="muted">Введите французскую je-форму</span></div><form class="input-row" id="answer"><input class="input" name="a" autocomplete="off" required><button class="btn primary">Проверить</button></form><div class="feedback" id="fb" hidden></div>`;$('#answer').onsubmit=e=>{e.preventDefault();let val=e.currentTarget.a.value,ok=correct(i,val);review(i,ok?5:2,val);$('#fb').hidden=false;$('#fb').innerHTML=ok?`<span class="ok">Верно.</span> ${i.d.form}`:`<span class="no">Ошибка.</span> Правильно: <b>${i.d.form}</b>`;setTimeout(next,ok?700:1300)};c.querySelector('input').focus();return}let front=state.mode==='flash'?i.d.form:`${i.v.ru} · ${i.d.ru}`;if(!state.revealed){c.innerHTML=`<div class="prompt"><span class="muted">${i.v.inf} · ${i.t.label}</span><span class="prompt-main">${front}</span><span class="muted">${state.mode==='flash'?'Вспомните перевод':'Вспомните французскую форму'}</span></div><div class="actions"><button class="btn primary" data-show>Показать</button><button class="btn ghost" data-say>Прослушать</button></div>`;c.querySelector('[data-show]').onclick=()=>{state.revealed=true;renderTrainCard(i)};c.querySelector('[data-say]').onclick=()=>speak(i.d.form);return}c.innerHTML=`<div class="prompt"><span class="muted">${i.v.inf} · ${i.t.label}</span><span class="prompt-main">${i.d.form}</span><span class="muted">${i.d.ru}</span></div><div class="actions"><button class="btn bad" data-q="2">Сложно</button><button class="btn good" data-q="4">Помню</button><button class="btn primary" data-q="5">Легко</button><button class="btn ghost" data-say>Прослушать</button></div>`;$$('[data-q]').forEach(b=>b.onclick=()=>{review(i,+b.dataset.q);next()});c.querySelector('[data-say]').onclick=()=>speak(i.d.form)}
-function next(){state.item=pick();state.revealed=false;renderTrain()}
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function question(type=null){return{type:type||['choice','input','match'][Math.floor(Math.random()*3)],item:all()[Math.floor(Math.random()*TOTAL)]}}
-function renderTestStart(){views.test.innerHTML=`<div class="panel-head"><div><h2>Мини-тест</h2><p class="muted">Смешанные вопросы по всем je-формам.</p></div><div class="actions"><button class="btn primary" data-count="5">5 вопросов</button><button class="btn" data-count="10">10 вопросов</button></div></div>`;$$('[data-count]').forEach(b=>b.onclick=()=>startTest(+b.dataset.count))}
-function startTest(n){state.test={count:n,index:0,score:0,questions:Array.from({length:n},(_,i)=>question(i%3===2?'match':null)),answers:[]};renderTestQuestion()}
-function renderTestQuestion(){let t=state.test;if(!t||t.index>=t.questions.length)return renderTestResult();let q=t.questions[t.index],i=q.item,head=`<div class="panel-head"><div><h2>Вопрос ${t.index+1}/${t.count}</h2><p class="muted">${i.v.inf} · ${i.t.label}</p></div></div>`;if(q.type==='choice'){let choices=shuffle([i.d.form,...shuffle(all().filter(x=>x.key!==i.key)).slice(0,3).map(x=>x.d.form)]);views.test.innerHTML=`${head}<div class="train-card"><div class="prompt"><span class="prompt-main">${i.d.ru}</span><span class="muted">Выберите французскую форму</span></div><div class="choice">${choices.map(c=>`<button class="btn" data-choice="${c}">${c}</button>`).join('')}</div><div class="feedback" id="testFb" hidden></div></div>`;$$('[data-choice]').forEach(b=>b.onclick=()=>answerTest(b.dataset.choice===i.d.form,b.dataset.choice));return}if(q.type==='match'){let rows=shuffle(all()).slice(0,3),opts=shuffle(rows.map(r=>r.d.form));views.test.innerHTML=`${head}<div class="train-card"><div class="prompt"><span class="prompt-main">Сопоставление</span><span class="muted">Подберите форму к переводу</span></div><form class="match" id="match">${rows.map((r,n)=>`<label class="match-row"><span>${r.v.inf} · ${r.t.label}<br><b>${r.d.ru}</b></span><select class="select" name="m${n}" data-key="${r.key}"><option value="">Выберите</option>${opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></label>`).join('')}<button class="btn primary">Проверить</button></form><div class="feedback" id="testFb" hidden></div></div>`;$('#match').onsubmit=e=>{e.preventDefault();let ok=[...e.currentTarget.querySelectorAll('select')].every(s=>{let target=all().find(r=>r.key===s.dataset.key);review(target,s.value===target.d.form?5:2,s.value);return s.value===target.d.form});answerTest(ok,'match',true)};return}views.test.innerHTML=`${head}<div class="train-card"><div class="prompt"><span class="prompt-main">${i.d.ru}</span><span class="muted">Введите французскую je-форму</span></div><form class="input-row" id="testInput"><input class="input" name="a" autocomplete="off" required><button class="btn primary">Проверить</button></form><div class="feedback" id="testFb" hidden></div></div>`;$('#testInput').onsubmit=e=>{e.preventDefault();answerTest(correct(i,e.currentTarget.a.value),e.currentTarget.a.value)};views.test.querySelector('input').focus()}
-function answerTest(ok,answer,skip=false){let t=state.test,q=t.questions[t.index],i=q.item;t.answers.push({ok,answer,correct:i.d.form,item:i});if(ok)t.score++;if(!skip)review(i,ok?5:2,String(answer||''));let fb=$('#testFb');fb.hidden=false;fb.innerHTML=q.type==='match'?(ok?'<span class="ok">Верно.</span>':'<span class="no">Есть ошибки.</span>'):(ok?`<span class="ok">Верно.</span>`:`<span class="no">Ошибка.</span> Правильно: <b>${i.d.form}</b>`);setTimeout(()=>{t.index++;renderTestQuestion()},ok?700:1400)}
-function renderTestResult(){let t=state.test;views.test.innerHTML=`<div class="panel-head"><div><h2>Результат</h2><p class="muted">${t.score}/${t.count} правильных ответов</p></div><button class="btn primary" data-again>Ещё тест</button></div><ul class="list">${t.answers.map((a,n)=>`<li><b>${n+1}. ${a.item.v.inf} · ${a.item.t.label}</b><br><span class="${a.ok?'ok':'no'}">${a.ok?'верно':'ошибка'}</span><span class="muted"> · ${a.correct}</span></li>`).join('')}</ul>`;views.test.querySelector('[data-again]').onclick=renderTestStart}
-function renderProgress(){let hard=all().map(i=>({i,r:rec(i.key)})).filter(x=>x.r.errors>0||x.r.ease<2.25).sort((a,b)=>b.r.errors-a.r.errors).slice(0,10);views.progress.innerHTML=`<div class="panel-head"><div><h2>Прогресс</h2><p class="muted">Выучено ${learned()} из ${TOTAL} форм.</p></div><button class="btn primary" data-hard-train>Только сложные</button></div><div class="bar"><span class="fill" style="--v:${pct(learned(),TOTAL)}%"></span></div><h3>Статистика ошибок</h3><ul class="list">${hard.length?hard.map(({i,r})=>`<li><b>${i.d.form}</b> · ${i.v.inf} · ${i.t.label}<br><span class="muted">Ошибок: ${r.errors}, попыток: ${r.attempts}, ease: ${r.ease.toFixed(2)}</span></li>`).join(''):'<li>Ошибок пока нет.</li>'}</ul>`;views.progress.querySelector('[data-hard-train]').onclick=()=>{state.hard=true;state.item=pick();setView('training')}}
-$$('.tab').forEach(b=>b.onclick=()=>setView(b.dataset.view));$('#themeBtn').onclick=()=>{let next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;document.documentElement.style.colorScheme=next;localStorage.setItem(THEME,next)};$('#resetBtn').onclick=()=>{if(confirm('Сбросить локальный прогресс Je verbs?')){localStorage.removeItem(STORE);state.data=load();state.item=null;updateStats();setView('dashboard')}};document.documentElement.dataset.theme=localStorage.getItem(THEME)||'dark';updateStats();renderDash();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script>
->>>>>>> 8a984f3abe7880330b811ffbcd4cb5ec3edf31b9
 </body>
 </html>
