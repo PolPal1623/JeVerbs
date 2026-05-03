@@ -1,4 +1,4 @@
-const CACHE_NAME = "je-verbs-v2";
+const CACHE_NAME = "je-verbs-v3";
 const ASSETS = ["./", "./index.html", "./README.md"];
 
 self.addEventListener("install", (event) => {

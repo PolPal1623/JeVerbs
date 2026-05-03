@@ -10,7 +10,7 @@
 ## Что внутри
 
 - 10 базовых глаголов: `être`, `avoir`, `aller`, `faire`, `dire`, `devoir`, `pouvoir`, `vouloir`, `savoir`, `prendre`.
-- 5 времён: `présent`, `futur proche`, `passé composé`, `imparfait`, `futur simple`.
+- 5 времён в порядке: `Present`, `Passé Composé`, `Imparfait`, `Future Simple`, `Le futur proche`.
 - Только формы с местоимением `je`.
 - Карточка каждого глагола с таблицей форм, короткими примерами и TTS.
 - Тренировка: flashcards, reverse mode и ввод ответа.
